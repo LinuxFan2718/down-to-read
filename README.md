@@ -24,3 +24,8 @@ are ready for a houseguest!
 - make `bookshelf.html` display lisk of books and authors
 - style bookshelf (brick background?)
 - add a link/button in `popup.html` to rescan books
+
+## Hyperlinks
+
+[Thoughtbot](https://thoughtbot.com/blog/how-to-make-a-chrome-extension)
+
