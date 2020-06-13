@@ -29,3 +29,6 @@ are ready for a houseguest!
 
 [Thoughtbot](https://thoughtbot.com/blog/how-to-make-a-chrome-extension)
 
+[Web SQL](https://www.tutorialspoint.com/html5/html5_web_sql.htm)
+
+[sample code](https://gist.github.com/jkubecki/d61d3e953ed5c8379075b5ddd8a95f22)
