@@ -19,5 +19,8 @@
       "matches": ["https://read.amazon.com/"],
       "js": ["read-books.js"]
     }
-  ]
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  }
 }
