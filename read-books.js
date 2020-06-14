@@ -1,13 +1,23 @@
-// content.js
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
       if( request.message === "clicked_browser_action" ) {
-        var firstHref = $("a[href^='http']").eq(0).attr("href");
-  
-        console.log(firstHref);
-  
-        // This line is new!
-        chrome.runtime.sendMessage({"message": "open_new_tab", "url": firstHref});
+        //chrome.runtime.sendMessage({"message": "open_new_tab", "url": "https://read.amazon.com"});
+        // if on read.amazon.com
+        readBooks()
+        // else
+        // please go to read.amazon.com and try again
+
       }
     }
   );
+
+  function readBooks() {
+    alert('The DOM is loaded');
+    var db = openDatabase('K4W', '3', 'down_to_read', 2 * 1024 * 1024);
+    db.transaction(function (tx) {
+        tx.executeSql('SELECT * FROM bookdata;', [], function(tx, results) { 
+            console.log(results.rows.item(1));
+            alert(results.rows.item(1));
+        })
+    });
+  };
