@@ -3,21 +3,13 @@
   "name": "Down To Read",
   "version": "1.0",
   "description": "Virtual Bookshelf of Your Kindle Library.",
-  "icons": {
-    "128": "icon_16.png",
-    "128": "icon_32.png",
-    "128": "icon_48.png",
-    "128": "icon_128.png"
-  },
-  "permissions": ["https://read.amazon.com/", "activeTab"],
   "browser_action": {
-    "default_icon": "icon_128.png",
-    "default_popup": "popup.html"
+    "default_icon": "icon_128.png"
   },
   "content_scripts": [
     {
-      "matches": ["https://read.amazon.com/"],
-      "js": ["read-books.js"]
+      "matches": ["<all_urls>"],
+      "js": ["jquery-2.2.4.min.js", "read-books.js"]
     }
   ],
   "background": {

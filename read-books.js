@@ -1,9 +1,13 @@
-// Web SQL
-// can be viewed in Chrome Dev Tools, Application tab
-
-var db = openDatabase('K4W', '3', 'down_to_read', 2 * 1024 * 1024);
-db.transaction(function (tx) {
-    tx.executeSql('SELECT * FROM bookdata;', [], function(tx, results) { 
-        console.log(results.rows.item(1));
-    })
-});
+// content.js
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+      if( request.message === "clicked_browser_action" ) {
+        var firstHref = $("a[href^='http']").eq(0).attr("href");
+  
+        console.log(firstHref);
+  
+        // This line is new!
+        chrome.runtime.sendMessage({"message": "open_new_tab", "url": firstHref});
+      }
+    }
+  );
