@@ -16,12 +16,11 @@ chrome.runtime.onMessage.addListener(
     var db = openDatabase('K4W', '3', 'down_to_read', 2 * 1024 * 1024);
     document.open();
     db.transaction(function (tx) {
-        tx.executeSql('SELECT * FROM bookdata;', [], function(tx, results) { 
-            var bookTitle = results.rows.item(1)['title'];
-
-            document.write("<h1>" + bookTitle + "</h1>");
-
-        })
+      tx.executeSql('SELECT * FROM bookdata;', [], function(tx, results) {
+        for (let i=0; i < results.rows.length; i++) {
+          document.write("<h1>" + results.rows.item(i)['title'] + "</h1>");
+        }
+      })
     });
     document.close();
   };
