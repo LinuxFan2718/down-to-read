@@ -16,14 +16,8 @@ are ready for a houseguest!
 
 ## Development plan
 
-- [x] make `read-books.js` load a list of book titles and authors
-- [x] store the titles and authors
-- [x] add "coming soon" `bookshelf.html` in new tab
-- [ ] add a working link/button in `popup.html` to view bookshelf
-- [ ] add check for empty list and prompt to fill it
-- [ ] make `bookshelf.html` display lisk of books and authors
 - [ ] style bookshelf (brick background?)
-- [ ] add a link/button in `popup.html` to rescan books
+- [ ] redirect to read.amazon.com if not there already
 
 ## Hyperlinks
 
