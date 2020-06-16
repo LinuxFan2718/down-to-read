@@ -18,7 +18,14 @@ chrome.runtime.onMessage.addListener(
     db.transaction(function (tx) {
       tx.executeSql('SELECT * FROM bookdata;', [], function(tx, results) {
         for (let i=0; i < results.rows.length; i++) {
-          document.write("<h1>" + results.rows.item(i)['title'] + "</h1>");
+          var serializedAuthors = eval(results.rows.item(i)['authors']);
+          var authors = '';
+          for (let j=0; j < serializedAuthors.length; j++) {
+            var swappedAuthor = serializedAuthors[j].split(',');
+            authors += swappedAuthor[1] + ' ' + swappedAuthor[0] + ', ';
+          }
+          authors = authors.substring(0, authors.length - 2);
+          document.write("<h1>" + results.rows.item(i)['title'] + " by " + authors + "</h1>");
         }
       })
     });
