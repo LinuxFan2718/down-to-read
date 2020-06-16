@@ -12,12 +12,14 @@ chrome.runtime.onMessage.addListener(
   );
 
   function readBooks() {
-    alert('The DOM is loaded');
+    // alert('The DOM is loaded');
     var db = openDatabase('K4W', '3', 'down_to_read', 2 * 1024 * 1024);
     db.transaction(function (tx) {
         tx.executeSql('SELECT * FROM bookdata;', [], function(tx, results) { 
-            console.log(results.rows.item(1));
-            alert(results.rows.item(1));
+            var bookTitle = results.rows.item(1)['title'];
+            document.open();
+            document.write("<h1>" + bookTitle + "</h1>");
+            document.close();
         })
     });
   };
