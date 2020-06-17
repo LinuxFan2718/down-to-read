@@ -26,3 +26,6 @@ are ready for a houseguest!
 [Web SQL](https://www.tutorialspoint.com/html5/html5_web_sql.htm)
 
 [sample code](https://gist.github.com/jkubecki/d61d3e953ed5c8379075b5ddd8a95f22)
+
+[bookshelf style](https://hmp.is.it/making-a-fancy-book-using-html5-canvases/)
+

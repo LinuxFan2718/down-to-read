@@ -15,8 +15,12 @@ chrome.runtime.onMessage.addListener(
     // alert('The DOM is loaded');
     var db = openDatabase('K4W', '3', 'down_to_read', 2 * 1024 * 1024);
     document.open();
+
+    
+
     db.transaction(function (tx) {
       tx.executeSql('SELECT * FROM bookdata;', [], function(tx, results) {
+        document.write('<div id="bookshelf">');
         for (let i=0; i < results.rows.length; i++) {
           var serializedAuthors = eval(results.rows.item(i)['authors']);
           var authors = '';
@@ -25,9 +29,14 @@ chrome.runtime.onMessage.addListener(
             authors += swappedAuthor[1] + ' ' + swappedAuthor[0] + ', ';
           }
           authors = authors.substring(0, authors.length - 2);
-          document.write("<h1>" + results.rows.item(i)['title'] + " by " + authors + "</h1>");
+          document.write('<div id="book">');
+          document.write("<p>" + results.rows.item(i)['title'] + " by " + authors + "</p>");
+          document.write("</div>");
         }
+        document.write('</div>');
       })
     });
+
+    
     document.close();
   };
