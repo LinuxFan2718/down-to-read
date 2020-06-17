@@ -37,8 +37,12 @@ chrome.runtime.onMessage.addListener(
         var style = document.createElement("style");
         head.appendChild(style);
         style.type = 'text/css';
-        var css = '#bookshelf { background: green; } #book { background: blue; }'
+        var css = '#bookshelf { background: green; }\
+                   #book { background: blue; }'
         style.appendChild(document.createTextNode(css));
+        var img = document.createElement("img");
+        img.src = chrome.runtime.getURL('wood.png');
+        document.body.appendChild(img);
       })
     });
  
