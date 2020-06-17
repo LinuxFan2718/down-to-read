@@ -15,7 +15,6 @@ chrome.runtime.onMessage.addListener(
     // alert('The DOM is loaded');
     var db = openDatabase('K4W', '3', 'down_to_read', 2 * 1024 * 1024);
     document.open();
-
     
 
     db.transaction(function (tx) {
@@ -34,9 +33,16 @@ chrome.runtime.onMessage.addListener(
           document.write("</div>");
         }
         document.write('</div>');
+        var head = document.head;
+        var style = document.createElement("style");
+        head.appendChild(style);
+        style.type = 'text/css';
+        var css = '#bookshelf { background: green; } #book { background: blue; }'
+        style.appendChild(document.createTextNode(css));
       })
     });
+ 
 
-    
+
     document.close();
   };
