@@ -15,5 +15,5 @@
   "background": {
     "scripts": ["background.js"]
   },
-  "web_accessible_resources": ["wood.png"]
+  "web_accessible_resources": ["style.css", "wood.png"]
 }

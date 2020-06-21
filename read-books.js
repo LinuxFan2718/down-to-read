@@ -33,20 +33,20 @@ chrome.runtime.onMessage.addListener(
           document.write("</div>");
         }
         document.write('</div>');
+
         var head = document.head;
-        var style = document.createElement("style");
-        head.appendChild(style);
-        style.type = 'text/css';
-        var css = '#bookshelf { background: green; }\
-                   #book { background: blue; }'
-        style.appendChild(document.createTextNode(css));
+
+        var link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.type = "text/css";
+        link.href = chrome.runtime.getURL('style.css');
+        head.appendChild(link);
+
         var img = document.createElement("img");
         img.src = chrome.runtime.getURL('wood.png');
         document.body.appendChild(img);
       })
     });
- 
-
 
     document.close();
   };
