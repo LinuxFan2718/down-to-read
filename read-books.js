@@ -1,14 +1,10 @@
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
       if( request.message === "clicked_browser_action" ) {
-        console.log(request.url);
-        // if on read.amazon.com
         if(request.url == "https://read.amazon.com/") {
           readBooks();
         } else {
-          alert("please go to read.amazon.com and try again");
-          //chrome.runtime.sendMessage({"message": "open_new_tab", "url": "https://read.amazon.com"});
-          //wait for it to load
+          chrome.runtime.sendMessage({"message": "open_new_tab", "url": "https://read.amazon.com"});
         }
       }
     }
