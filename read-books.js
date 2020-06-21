@@ -1,24 +1,25 @@
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
       if( request.message === "clicked_browser_action" ) {
-        //chrome.runtime.sendMessage({"message": "open_new_tab", "url": "https://read.amazon.com"});
+        console.log(request.url);
         // if on read.amazon.com
         readBooks()
         // else
         // please go to read.amazon.com and try again
-
+        //chrome.runtime.sendMessage({"message": "open_new_tab", "url": "https://read.amazon.com"});
+        //wait for it to load
       }
     }
   );
 
   function readBooks() {
-    // alert('The DOM is loaded');
+    // DOM is loaded
     var db = openDatabase('K4W', '3', 'down_to_read', 2 * 1024 * 1024);
     document.open();
-    
 
     db.transaction(function (tx) {
       tx.executeSql('SELECT * FROM bookdata;', [], function(tx, results) {
+
         document.write('<div id="bookshelf">');
         for (let i=0; i < results.rows.length; i++) {
           var serializedAuthors = eval(results.rows.item(i)['authors']);
