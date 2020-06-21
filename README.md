@@ -16,8 +16,9 @@ are ready for a houseguest!
 
 ## Development plan
 
+- [x] redirect to read.amazon.com if not there already
 - [ ] style bookshelf (brick background?)
-- [ ] redirect to read.amazon.com if not there already
+
 
 ## Hyperlinks
 
