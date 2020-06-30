@@ -19,6 +19,15 @@ are ready for a houseguest!
 - [x] redirect to read.amazon.com if not there already
 - [ ] style bookshelf (brick background?)
 
+## Ideas
+
+Add instructions.html to Down To Read that load on installation
+
+launch on Product Hunt? 
+
+youtube video about it?
+
+announcement tweet with a GIF in the style of the queen of shitty robots?
 
 ## Hyperlinks
 
