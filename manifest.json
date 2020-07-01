@@ -18,7 +18,9 @@
   "web_accessible_resources": [
     "style.css",
     "wood.png",
-    "border.png"
+    "border.png",
+    "leather.png",
+    "canvas.png"
   ],
   "permissions": ["tabs"]
 }

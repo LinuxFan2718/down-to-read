@@ -15,8 +15,45 @@ chrome.runtime.onMessage.addListener(
     var db = openDatabase('K4W', '3', 'down_to_read', 2 * 1024 * 1024);
     document.open();
 
+    $(function(){
+      // An object to store our images
+      var imgs = {
+        leather: new Image(),
+        canvas: new Image()
+      };
+      // An object to store our canvases
+      var canvases = {};
+      // Counts how many images are loaded.
+      var imgsLoaded = 0;
+      // Loop over each of the imgs and insert it into the hidden container.
+      $.each(imgs, function(index, img){
+        $('#hidden-container').append(img);
+        // Once the image is loaded we create a canvas the exact size of our images
+        img.onload = function() {
+          canvases[index] = $("<canvas />");
+          canvases[index]
+            .attr('width', img.clientWidth)   // Set the height of the canvas to the img height
+            .attr('height', img.clientHeight) // same with width.
+            .attr('id', index)                // Give it an id according to our texture
+            .addClass('texture');             // And a class of 'texture'
+          $('body').append(canvases[index]);    // Append it to our document body
+          // We then draw the image on our canvas
+          canvases[index].get(0).getContext('2d').drawImage(img, 0, 0);
+          imgsLoaded++;
+          if(imgsLoaded === Object.keys(imgs).length){
+            // Do something
+          }
+        }
+      });
+      // And here we set the src attribute of each image
+      // chrome.runtime.getURL('wood.png');
+      imgs.leather.src = chrome.runtime.getURL('leather.png');
+      imgs.canvas.src = chrome.runtime.getURL('canvas.png');
+    });
+
     db.transaction(function (tx) {
       tx.executeSql('SELECT * FROM bookdata;', [], function(tx, results) {
+        document.write('<div id="hidden-container"></div>');
         document.write('<div id="bookcase-cont">');
         document.write('<div id="bookcase">');
 
