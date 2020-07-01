@@ -9,12 +9,18 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["jquery-2.2.4.min.js", "read-books.js"]
+      "js": ["jquery-2.2.4.min.js", "context_blender.js", "read-books.js"]
     }
   ],
   "background": {
     "scripts": ["background.js"]
   },
-  "web_accessible_resources": ["style.css", "wood.png"],
+  "web_accessible_resources": [
+    "style.css",
+    "wood.png",
+    "border.png",
+    "leather.png",
+    "canvas.png"
+  ],
   "permissions": ["tabs"]
 }
