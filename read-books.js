@@ -15,43 +15,6 @@ chrome.runtime.onMessage.addListener(
     var db = openDatabase('K4W', '3', 'down_to_read', 2 * 1024 * 1024);
     document.open();
 
-    // step 2
-    $(function(){
-      // An object to store our images
-      var imgs = {
-        leather: new Image(),
-        canvas: new Image()
-      };
-      // An object to store our canvases
-      var canvases = {};
-      // Counts how many images are loaded.
-      var imgsLoaded = 0;
-      // Loop over each of the imgs and insert it into the hidden container.
-      $.each(imgs, function(index, img){
-        $('#hidden-container').append(img);
-        // Once the image is loaded we create a canvas the exact size of our images
-        img.onload = function() {
-          canvases[index] = $("<canvas />");
-          canvases[index]
-            .attr('width', img.clientWidth)   // Set the height of the canvas to the img height
-            .attr('height', img.clientHeight) // same with width.
-            .attr('id', index)                // Give it an id according to our texture
-            .addClass('texture');             // And a class of 'texture'
-          $('body').append(canvases[index]);    // Append it to our document body
-          // We then draw the image on our canvas
-          canvases[index].get(0).getContext('2d').drawImage(img, 0, 0);
-          imgsLoaded++;
-          if(imgsLoaded === Object.keys(imgs).length){
-            // Do something
-          }
-        }
-      });
-      // And here we set the src attribute of each image
-      // chrome.runtime.getURL('wood.png');
-      imgs.leather.src = chrome.runtime.getURL('leather.png');
-      imgs.canvas.src = chrome.runtime.getURL('canvas.png');
-    });
-
     // step 3
     function makeBook (options) {
       // We need a texture to apply to the book.
@@ -87,7 +50,7 @@ chrome.runtime.onMessage.addListener(
       // Fill with a basic colour
       context.fillRect(0, 0, options.width, options.height);
       // Overlay our texture onto the book.
-      options.texture.get(0).getContext('2d').blendOnto(context,'overlay');
+      //options.texture.get(0).getContext('2d').blendOnto(context,'overlay');
       // Add our text to the book.
       $book.append($text);
       // Return our book (note this is a jQuery object!)
@@ -96,35 +59,57 @@ chrome.runtime.onMessage.addListener(
 
     db.transaction(function (tx) {
       tx.executeSql('SELECT * FROM bookdata;', [], function(tx, results) {
-        document.write('<div id="hidden-container"></div>');
+        document.write('<div id="hidden-container"></div>');        
         document.write('<div id="bookcase-cont">');
         document.write('<div id="bookcase">');
+        // step 2
+        $(function(){
+          // An object to store our images
+          var imgs = {
+            leather: new Image(),
+            canvas: new Image()
+          };
+          // And here we set the src attribute of each image
+          imgs.leather.src = chrome.runtime.getURL('leather.png');
+          imgs.canvas.src = chrome.runtime.getURL('canvas.png');
+          // An object to store our canvases
+          var canvases = {};
+          // Counts how many images are loaded.
+          var imgsLoaded = 0;
+          // Loop over each of the imgs and insert it into the hidden container.
+          $.each(imgs, function(index, img){
+            $('#hidden-container').append(img);
+            // Once the image is loaded we create a canvas the exact size of our images
+            img.onload = function() {
+              canvases[index] = $("<canvas />");
+              canvases[index]
+                .attr('width', img.clientWidth)   // Set the height of the canvas to the img height
+                .attr('height', img.clientHeight) // same with width.
+                .attr('id', index)                // Give it an id according to our texture
+                .addClass('texture');             // And a class of 'texture'
+              $('body').append(canvases[index]);    // Append it to our document body
+              // We then draw the image on our canvas
+              canvases[index].get(0).getContext('2d').drawImage(img, 0, 0);
+              imgsLoaded++;
+              if(imgsLoaded === Object.keys(imgs).length){
+                for (let i=0; i < results.rows.length; i++) {
+                  var serializedAuthors = eval(results.rows.item(i)['authors']);
+                  var authors = '';
+                  for (let j=0; j < serializedAuthors.length; j++) {
+                    var swappedAuthor = serializedAuthors[j].split(',');
+                    authors += swappedAuthor[1] + ' ' + swappedAuthor[0] + ', ';
+                  }
+                  authors = authors.substring(0, authors.length - 2);
+                  spineText = results.rows.item(i)['title'] + " by " + authors;
+                  var $book = makeBook({text: spineText, texture: canvases['leather']});
+                  $('#bookcase').append($book);
+                }
 
-        for (let i=0; i < results.rows.length; i++) {
-          var serializedAuthors = eval(results.rows.item(i)['authors']);
-          var authors = '';
-          for (let j=0; j < serializedAuthors.length; j++) {
-            var swappedAuthor = serializedAuthors[j].split(',');
-            authors += swappedAuthor[1] + ' ' + swappedAuthor[0] + ', ';
-          }
-          authors = authors.substring(0, authors.length - 2);
-          document.write('<div id="book">');
-          document.write("<p>" + results.rows.item(i)['title'] + " by " + authors + "</p>");
-          document.write("</div>");
-        }
+              }
+            }
+          });
+        });
         document.write('</div></div>');
-
-        var head = document.head;
-
-        var link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.type = "text/css";
-        link.href = chrome.runtime.getURL('style.css');
-        head.appendChild(link);
-
-        // var img = document.createElement("img");
-        // img.src = chrome.runtime.getURL('wood.png');
-        // document.body.appendChild(img);
       })
     });
 
