@@ -15,6 +15,7 @@ chrome.runtime.onMessage.addListener(
     var db = openDatabase('K4W', '3', 'down_to_read', 2 * 1024 * 1024);
     document.open();
 
+    // step 2
     $(function(){
       // An object to store our images
       var imgs = {
@@ -50,6 +51,48 @@ chrome.runtime.onMessage.addListener(
       imgs.leather.src = chrome.runtime.getURL('leather.png');
       imgs.canvas.src = chrome.runtime.getURL('canvas.png');
     });
+
+    // step 3
+    function makeBook (options) {
+      // We need a texture to apply to the book.
+      if(typeof options.texture === "undefined") return false;
+      // Our default options
+      options = $.extend(true,
+        {
+          text: "",
+          color: "#B8293B",
+          height: 200,
+          width: 32
+        }, options);
+      // This gets our container height
+      var contHeight = $('#bookcase').height();
+      // Here we create our text and book elements.
+      var $text = $('<span class="booktext">' + options.text + '</span>');
+      var $book = $('<div class="book" />');
+      // And we set the book properties as set in options.
+      $book.height(options.height);
+      $book.width(options.width);
+      // Here we use jQuery $.offset() to position our book resting on the 'shelf'
+      $book.offset({top: contHeight - options.height});
+      // Now we create our book texture
+      var canvas = document.createElement('canvas');
+      var context = canvas.getContext('2d');
+      // We set the properties of our canvas according to our options
+      canvas.className = 'canvas-texture';
+      canvas.width = options.width;
+      canvas.height = options.height;
+      context.fillStyle = options.color;
+      // And then we append it to our book
+      $book.append(canvas);
+      // Fill with a basic colour
+      context.fillRect(0, 0, options.width, options.height);
+      // Overlay our texture onto the book.
+      options.texture.get(0).getContext('2d').blendOnto(context,'overlay');
+      // Add our text to the book.
+      $book.append($text);
+      // Return our book (note this is a jQuery object!)
+      return $book;
+    }
 
     db.transaction(function (tx) {
       tx.executeSql('SELECT * FROM bookdata;', [], function(tx, results) {
