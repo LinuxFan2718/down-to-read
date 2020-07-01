@@ -24,11 +24,11 @@ chrome.runtime.onMessage.addListener(
         {
           text: "",
           color: "#B8293B",
-          height: 200,
-          width: 32
+          height: 600,
+          width: 64
         }, options);
       // This gets our container height
-      var contHeight = $('#bookcase').height();
+      var contHeight = 720; //$('#bookcase').height();
       // Here we create our text and book elements.
       var $text = $('<span class="booktext">' + options.text + '</span>');
       var $book = $('<div class="book" />');
@@ -50,7 +50,7 @@ chrome.runtime.onMessage.addListener(
       // Fill with a basic colour
       context.fillRect(0, 0, options.width, options.height);
       // Overlay our texture onto the book.
-      //options.texture.get(0).getContext('2d').blendOnto(context,'overlay');
+      options.texture.get(0).getContext('2d').blendOnto(context,'overlay');
       // Add our text to the book.
       $book.append($text);
       // Return our book (note this is a jQuery object!)
