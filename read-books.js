@@ -110,6 +110,13 @@ chrome.runtime.onMessage.addListener(
           });
         });
         document.write('</div></div>');
+        var head = document.head;
+
+        var link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.type = "text/css";
+        link.href = chrome.runtime.getURL('style.css');
+        head.appendChild(link);
       })
     });
 
