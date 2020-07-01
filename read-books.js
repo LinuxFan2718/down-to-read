@@ -17,8 +17,9 @@ chrome.runtime.onMessage.addListener(
 
     db.transaction(function (tx) {
       tx.executeSql('SELECT * FROM bookdata;', [], function(tx, results) {
+        document.write('<div id="bookcase-cont">');
+        document.write('<div id="bookcase">');
 
-        document.write('<div id="bookshelf">');
         for (let i=0; i < results.rows.length; i++) {
           var serializedAuthors = eval(results.rows.item(i)['authors']);
           var authors = '';
@@ -31,7 +32,7 @@ chrome.runtime.onMessage.addListener(
           document.write("<p>" + results.rows.item(i)['title'] + " by " + authors + "</p>");
           document.write("</div>");
         }
-        document.write('</div>');
+        document.write('</div></div>');
 
         var head = document.head;
 
@@ -41,9 +42,9 @@ chrome.runtime.onMessage.addListener(
         link.href = chrome.runtime.getURL('style.css');
         head.appendChild(link);
 
-        var img = document.createElement("img");
-        img.src = chrome.runtime.getURL('wood.png');
-        document.body.appendChild(img);
+        // var img = document.createElement("img");
+        // img.src = chrome.runtime.getURL('wood.png');
+        // document.body.appendChild(img);
       })
     });
 

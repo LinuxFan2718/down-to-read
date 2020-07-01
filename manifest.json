@@ -15,6 +15,10 @@
   "background": {
     "scripts": ["background.js"]
   },
-  "web_accessible_resources": ["style.css", "wood.png"],
+  "web_accessible_resources": [
+    "style.css",
+    "wood.png",
+    "border.png"
+  ],
   "permissions": ["tabs"]
 }

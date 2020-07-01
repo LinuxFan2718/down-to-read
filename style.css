@@ -1,7 +1,12 @@
-#bookshelf {
-    background: green;
+#bookcase-cont {
+    height: 390px;
+    width: 100%;
+    background-image: url('border.png');
 }
 
-#book {
-    background: blue;
+#bookcase {
+    width: 100%;
+    height: 360px;
+    background-image: url('wood.png');
+    box-shadow: inset 0 0 60px 60px rgba(0,0,0,0.4);
 }
